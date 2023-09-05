@@ -14,6 +14,7 @@ class Level {
     get name(): string {
         return this._name;
     }
+
     get description(): string {
         return this._description;
     }
@@ -21,14 +22,17 @@ class Level {
     get groups(): Group[] {
         return this._groups;
     }
-    addGroup(group: Group): void{
+
+    addGroup(group: Group): void {
         this._groups.push(group);
     }
-    removeGroup(group: Group){
+
+    removeGroup(group: Group) {
         let index = this._groups.indexOf(group);
-        if (index >= 0){
+        if (index >= 0) {
             this._groups.splice(index, 1);
         }
     }
 }
+
 export default Level;

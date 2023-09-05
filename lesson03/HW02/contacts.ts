@@ -9,4 +9,5 @@ class Contacts {
         this.email = email;
     }
 }
+
 export default Contacts;
