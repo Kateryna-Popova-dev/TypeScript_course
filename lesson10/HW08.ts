@@ -1,11 +1,11 @@
 //1
-let arrayNum = [5, 3, 7, 9, 11, 5, 2];
-let arrayStr = ['one', 'three', 'four', 'two', 'one', 'two', 'five'];
+const arrayNum = [5, 3, 7, 9, 11, 5, 2];
+const arrayStr = ['one', 'three', 'four', 'two', 'one', 'two', 'five'];
 
 type filter<U1> = (el: U1) => U1 | undefined;
 
 function filterArray_1<T2>(array: T2[], condition: filter<T2>): T2 | undefined {
-    let newArray: any = [];
+    const newArray: T2[] = [];
     for (let i = 0; i < array.length; i++) {
         if (condition(array[i])) {
             newArray.push(array[i]);
@@ -14,10 +14,10 @@ function filterArray_1<T2>(array: T2[], condition: filter<T2>): T2 | undefined {
     return newArray as T2;
 }
 
-let array1 = filterArray_1<number>(arrayNum, (el) => {
+const array1 = filterArray_1<number>(arrayNum, (el) => {
     if (el === 5) return el
 });
-let array2 = filterArray_1<string>(arrayStr, (el) => {
+const array2 = filterArray_1<string>(arrayStr, (el) => {
     if (el === 'one') return el
 });
 console.log('array 1', array1);
@@ -46,19 +46,19 @@ class Stack<T> {
     }
 }
 
-let stackNum: Stack<number> = new Stack();
-let stackStr: Stack<string> = new Stack();
+const stackNum: Stack<number> = new Stack();
+const stackStr: Stack<string> = new Stack();
 
 stackNum.push(12);
 stackNum.push(34);
 stackNum.push(90);
 stackNum.pop();
-let lastElemNum = stackNum.peek();
+const lastElemNum = stackNum.peek();
 
 stackStr.push('one');
 stackStr.push('two');
 stackStr.pop();
-let lastElemStr = stackStr.peek();
+const lastElemStr = stackStr.peek();
 
 
 console.log('stackNum', stackNum);
@@ -67,50 +67,33 @@ console.log('lastElemNum', lastElemNum);
 console.log('lastElemStr', lastElemStr);
 
 //3
-interface IWord<T extends string | number> {
-    [key: string | number]: T;
+type keyType = string | number | symbol;
+
+class DictionaryStorage<V> {
+    [key: keyType]: V;
 }
 
-class Dictionary<U extends string | number> {
-    dictionaryList: IWord<U>[] = [];
+class Dictionary<V> {
+    private dic: DictionaryStorage<V> = new DictionaryStorage<V>();
 
-    set(word: IWord<U>) {
-        this.dictionaryList.push(word);
+    public set(key_: keyType, value: V): void {
+        this.dic[key_] = value;
     }
 
-    get(word: string): U | undefined {
-        for (let item in this.dictionaryList) {
-            for (let [key, value] of Object.entries(this.dictionaryList[item])) {
-                if (key.toLowerCase() === word.toLowerCase()) {
-                    return value;
-                }
-            }
-        }
+    public get(key_: keyType): V {
+        return this.dic[key_];
     }
 
-    has(word: string): boolean {
-        for (let item in this.dictionaryList) {
-            for (let key in this.dictionaryList[item]) {
-                if (key.toLowerCase() === word.toLowerCase()) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    public has(key_: keyType): boolean {
+        return this.dic.hasOwnProperty(key_);
+
     }
 }
 
-let dictionary: Dictionary<string> = new Dictionary();
-let dictionaryNum: Dictionary<number> = new Dictionary();
-
-let words1: IWord<string> = {'One': 'Один', 'Two': 'Два'};
-let words2: IWord<number> = {'One': 1, 'Two': 2};
-
-dictionary.set(words1);
-console.log(dictionary.has('One'));
-dictionaryNum.set(words2);
+const dictionary: Dictionary<boolean> = new Dictionary<boolean>();
+dictionary.set('one', false);
+console.log(dictionary.has('one'));
 console.log(dictionary);
-console.log(dictionaryNum);
-console.log(dictionary.get('Two'));
+
 
 
