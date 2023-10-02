@@ -67,31 +67,26 @@ console.log('lastElemNum', lastElemNum);
 console.log('lastElemStr', lastElemStr);
 
 //3
-type keyType = string | number | symbol;
 
-class DictionaryStorage<V> {
-    [key: keyType]: V;
-}
 
-class Dictionary<V> {
-    private dic: DictionaryStorage<V> = new DictionaryStorage<V>();
+class Dictionary<K extends string | number | symbol, V> {
+    private dic = <{ [P in K]: V }>{};
 
-    public set(key_: keyType, value: V): void {
-        this.dic[key_] = value;
+    public set(key: K, value: V): void {
+        this.dic[key] = value;
     }
 
-    public get(key_: keyType): V | undefined {
-        return this.dic[key_];
+    public get(key: K): V | undefined {
+        return this.dic[key];
     }
 
-    public has(key_: keyType): boolean {
-        return this.dic.hasOwnProperty(key_);
-
+    public has(key: K): boolean {
+        return this.dic.hasOwnProperty(key);
     }
 }
 
-const dictionary: Dictionary<boolean> = new Dictionary<boolean>();
-dictionary.set('one', false);
+const dictionary: Dictionary<string, number> = new Dictionary<string, number>();
+dictionary.set('one', 42);
 console.log(dictionary.has('one'));
 console.log(dictionary);
 
