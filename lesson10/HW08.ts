@@ -38,7 +38,7 @@ class Stack<T> {
         return this.stackElem.splice(this.stackElem.length - 1)[0];
     }
 
-    peek(): Error | T {
+    peek(): T {
         if (this.stackElem.length === 0) {
             throw new Error("stack elements is empty");
         }
@@ -80,7 +80,7 @@ class Dictionary<V> {
         this.dic[key_] = value;
     }
 
-    public get(key_: keyType): V {
+    public get(key_: keyType): V | undefined {
         return this.dic[key_];
     }
 
