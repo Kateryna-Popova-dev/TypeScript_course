@@ -7,8 +7,8 @@ interface ISort {
     sortByDate: () => BaseToDoItem[];
 }
 
-class ToDoList implements ISearch, ISort {
-    private items: BaseToDoItem[] = [];
+class BaseToDoList {
+    protected items: BaseToDoItem[] = [];
 
     addItem(item: BaseToDoItem): void {
 
@@ -24,11 +24,11 @@ class ToDoList implements ISearch, ISort {
         }
     }
 
-    removeItem(id: number): void {
+    removeItem(id: number): BaseToDoItem[]|undefined {
         let item = this.items.find(item => item.id === id);
         if (item) {
             let index = this.items.indexOf(item);
-            this.items.splice(index, 1);
+            return this.items.splice(index, 1);
         }
     }
 
@@ -62,12 +62,16 @@ class ToDoList implements ISearch, ISort {
             unfinished: this.items.filter(item => !item.done).length
         }
     }
+}
 
+class ToDoListWithSearch extends BaseToDoList implements ISearch {
     search(value: string): BaseToDoItem[] {
         return this.items.filter(item => item.title.toLowerCase().includes(value.toLowerCase())
             || item.description.toLowerCase().includes(value.toLowerCase()));
     }
+}
 
+class ToDoListWithSort extends BaseToDoList implements ISort {
     sortByStatus(): BaseToDoItem[] {
         return this.items.sort((a, b) => +a.done - +b.done);
     }
@@ -115,7 +119,7 @@ class SecureToDoItem extends BaseToDoItem {
 let toDoItem1 = new BaseToDoItem('test1', 'description1');
 let toDoItem2 = new BaseToDoItem('test2', 'description2');
 let toDoItem3 = new SecureToDoItem('Kate', 'Popova');
-let toDoList = new ToDoList();
+let toDoList = new ToDoListWithSearch();
 toDoList.addItem(toDoItem1);
 toDoList.addItem(toDoItem2);
 toDoList.addItem(toDoItem3);
