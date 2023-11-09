@@ -102,11 +102,16 @@ class BankAccount {
         return this._holder;
     }
 
-    public deposite(amount: number): void {
-        this._balance += amount;
+    public deposite(amount: number, currency: CurrencyTypesEnum = this.currency): void {
+        if (this.currency === currency) {
+            this._balance += amount
+        } else {
+            const convertedAmount = this._conversionStrategy.convert(amount, currency);
+            this._balance += convertedAmount;
+        }
     }
 
-    public withdraw(amount: number, currency: CurrencyTypesEnum): void {
+    public withdraw(amount: number, currency: CurrencyTypesEnum = this.currency): void {
         if (this.currency === currency) {
             this._balance -= amount
         } else {
@@ -155,12 +160,6 @@ class Bank {
         const account = this.accounts[bankAccount.number];
         account?.withdraw(amount, currency);
     }
-
-    public getCreditDecision(client: IBankClient,): boolean {
-        //Надо смотреть занятие.
-        return true;
-    }
-
 }
 
 class SalaryDataProvider {
@@ -187,21 +186,64 @@ const UAHExchangeRate = {
     [CurrencyTypesEnum.USD]: 36.06,
     [CurrencyTypesEnum.EUR]: 38.61,
 }
+
+interface Command {
+    execute(): void;
+
+    undo(): void;
+}
+
+class DepositCommand implements Command {
+
+    constructor(private bankAccount: BankAccount, private amount: number) {
+    }
+
+    execute(): void {
+        this.bankAccount.deposite(this.amount);
+    }
+
+    undo(): void {
+        this.bankAccount.withdraw(this.amount);
+    }
+}
+
+class WithdrawCommand implements Command {
+    constructor(private bankAccount: BankAccount, private amount: number, private currency: CurrencyTypesEnum) {
+    }
+
+    execute(): void {
+        this.bankAccount.withdraw(this.amount, this.currency);
+    }
+
+    undo(): void {
+        this.bankAccount.deposite(this.amount, this.currency);
+    }
+}
+
 const bank = Bank.getInstance();
 
 const john = new BankClient('John', 'Doe', 42);
-
 
 const fixedRatesStrategy = new FixedRateConversionStrategy(0.5);
 
 const johnAccountEUR = bank.createAccount(john, CurrencyTypesEnum.EUR, new CurrentRateConversionStrategy(EURExchangeRate));
 const johnAccountUSD = bank.createAccount(john, CurrencyTypesEnum.USD, fixedRatesStrategy);
 const johnAccountUAH = bank.createAccount(john, CurrencyTypesEnum.UAH, new CurrentRateConversionStrategy(UAHExchangeRate));
-bank.deposite(johnAccountUAH, 1000);
+
 bank.deleteAccount(johnAccountEUR);
 bank.deleteAccount(johnAccountUSD);
 
-bank.withdraw(johnAccountUAH, 100, CurrencyTypesEnum.EUR);
-bank.getCreditDecision(john);
+bank.deposite(johnAccountUAH, 1000);
+
+
+const addDeposit = new DepositCommand(johnAccountUAH, 200);
+const addWithdraw = new WithdrawCommand(johnAccountUAH, 10, CurrencyTypesEnum.USD);
+
+addDeposit.execute();
+addDeposit.execute();
+addDeposit.undo();
+addWithdraw.execute();
+addWithdraw.undo();
+
 console.log(bank.accounts);
 
