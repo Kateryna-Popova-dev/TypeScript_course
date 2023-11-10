@@ -134,8 +134,8 @@ class Bank {
     }
 
     public static getInstance(): Bank {
-        if (this.instance === undefined) {
-            this.instance = new Bank();
+        if (Bank.instance === undefined) {
+            Bank.instance = new Bank();
         }
         return Bank.instance;
     }
