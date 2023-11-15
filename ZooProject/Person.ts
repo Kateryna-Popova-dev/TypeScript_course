@@ -1,14 +1,14 @@
 import {regExp} from './helper';
 
-export abstract class Person {
+export class Person {
     _id: number;
-    protected _firstName: string;
-    protected _lastName: string;
-    protected _dateOfBirth?: string;
-    protected _tel?: string;
-    protected _email?: string;
+    _firstName: string;
+    _lastName: string;
+    _dateOfBirth?: string;
+    _tel?: string;
+    _email?: string;
 
-    protected constructor(firstName: string, lastName: string, dateOfBirth?: string) {
+    constructor(firstName: string, lastName: string, dateOfBirth?: string, tel?: string, email?: string) {
         this._firstName = firstName;
         this._lastName = lastName;
         this._dateOfBirth = dateOfBirth;
@@ -20,13 +20,26 @@ export abstract class Person {
                 throw new Error('udtyudtyutf');
             }
         }
+        this._tel = tel;
+        this._email = email;
     }
 
-    abstract get age(): number;
+    get age(): number {
+        return 0;
+    }
 
-    abstract set dateOfBirth(date: string);
+    set dateOfBirth(date: string) {
+        while (!regExp.test(date)) {
+            alert("Date format should be 12/12/2012")
+        }
+        this._dateOfBirth = date;
+    }
 
-    abstract set tel(tel: string);
+    set email(email: string) {
+        this._email = email;
+    }
 
-    abstract set email(email: string);
+    set tel(tel: string) {
+        this._tel = tel;
+    }
 }

@@ -1,22 +1,13 @@
 import {Person} from "./Person";
+import {Observer} from "./interface";
 
-export class Client extends Person {
+export class Client extends Person implements Observer {
 
-    constructor(_firstName: string, _lastName: string, dateOfBirth?: string) {
-        super(_firstName, _lastName, dateOfBirth);
+    constructor(_firstName: string, _lastName: string, dateOfBirth?: string,  tel?: string, email?: string) {
+        super(_firstName, _lastName, dateOfBirth, tel, email);
     }
 
-    get age(): number {
-        return 0;
+    update(data: Person | string): void {
+        console.log(`I am client ${this._firstName} ${this._lastName}, got the message: ${data}`);
     }
-
-    set dateOfBirth(date: string) {
-    }
-
-    set email(email: string) {
-    }
-
-    set tel(tel: string) {
-    }
-
 }

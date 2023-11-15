@@ -2,6 +2,7 @@ import {Subject, Observer} from './interface';
 import {Visitor} from "./Visitor";
 import {TypeOfTickets, CashBox} from './CashBox';
 import {CommercialDepartment} from "./СommercialDepartment";
+import {Person} from "./Person";
 
 
 interface IZoo {
@@ -14,24 +15,25 @@ class Zoo implements IZoo, Observer, Subject<string> {
     private observers: Observer[] = [];
 
 
-    update(visitor: Visitor): void {
+    update(person: Person): void {
+        const visitor = new Visitor(person._firstName, person._lastName,person._dateOfBirth,  person._tel, person._email);
         this.visitors[visitor._id] = visitor;
         console.log('ConcreteObserverA: Reacted to the event.');
         this.attach(visitor);
     }
 
-    public attach(observer: Observer): void {
-        const isExist = this.observers.includes(observer);
+    public attach(visitor: Visitor): void {
+        const isExist = this.observers.includes(visitor);
         if (isExist) {
             return console.log('Subject: Observer has been attached already.');
         }
 
         console.log('Subject: Attached an observer.');
-        this.observers.push(observer);
+        this.observers.push(visitor);
     }
 
-    public detach(observer: Observer): void {
-        const observerIndex = this.observers.indexOf(observer);
+    public detach(visitor: Visitor): void {
+        const observerIndex = this.observers.indexOf(visitor);
         if (observerIndex === -1) {
             return console.log('Subject: Nonexistent observer.');
         }
@@ -63,18 +65,21 @@ const zoo = new Zoo;
 let commercialDepartment = new CommercialDepartment();
 const cashBox = new CashBox();
 
+
 cashBox.attach(zoo);
 cashBox.attach(commercialDepartment);
-const visitor01 = new Visitor('Kate', 'Popova');
-const visitor02 = new Visitor('Johnny', 'Depp', '09/06/1963');
+const person01 = new Person('Kate', 'Popova');
+const person02 = new Person('Johnny', 'Depp', '09/06/1963');
 
-visitor01.dateOfBirth = '06/11/1998';
-visitor01.tel = '380665554433';
-visitor01.email = 'test.popova@gmail.com';
-cashBox.ticketSale(visitor01, TypeOfTickets.adult);
-cashBox.ticketSale(visitor01, TypeOfTickets.child);
-cashBox.ticketSale(visitor02, TypeOfTickets.adult);
+person01.dateOfBirth = '06/11/1998';
+person01.tel = '380665554433';
+person01.email = 'test.popova@gmail.com';
+cashBox.ticketSale(person01, TypeOfTickets.child);
+cashBox.ticketSale(person02, TypeOfTickets.adult);
+
+commercialDepartment.newsletter('Курлык-курлык, приходите в наш зоопарк! :)')
 zoo.sendMessageToVisitors('The zoo closes in 15 minutes!');
+
 console.log('zoo.visitors', zoo.visitors);
 console.log('commercialDepartment.clients', commercialDepartment.clients);
 

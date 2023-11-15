@@ -17,9 +17,9 @@ export class CashBox implements Subject<Person> {
     private takings: number = 0;
     private observers: Observer[] = [];
 
-    ticketSale(visitor: Person, typeOfTicket: TypeOfTickets): void {
+    ticketSale(person: Person, typeOfTicket: TypeOfTickets): void {
         this.takings += ticketPrice[typeOfTicket];
-        this.notify(visitor);
+        this.notify(person);
     }
 
     public attach(observer: Observer): void {
@@ -45,10 +45,10 @@ export class CashBox implements Subject<Person> {
     /**
      * Trigger an update in each subscriber.
      */
-    public notify(visitor: Person): void {
+    public notify(person: Person): void {
         console.log('Subject: Notifying observers...');
         for (const observer of this.observers) {
-            observer.update(visitor);
+            observer.update(person);
         }
     }
 }
