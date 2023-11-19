@@ -68,8 +68,6 @@ export class Accounting extends mediatorSetter {
                 sumPayment += salary;
             }
         }
-        console.log('sumPayment', sumPayment)
-
         this._budget -= sumPayment;
         this._paymentHistory.push({event: accountingEvent.SALARYPAYMAENT, amount: sumPayment});
     }
@@ -79,7 +77,6 @@ export class Accounting extends mediatorSetter {
         for (let i = 0; i < this._animals.length; i++) {
             purchaseAmount += costOfFeed[this._animals[i].typeOfAnimal];
         }
-        console.log('purchaseAmount', purchaseAmount)
         this._budget -= purchaseAmount;
         this._paymentHistory.push({event: accountingEvent.FEEDPURCHASE, amount: purchaseAmount});
     }

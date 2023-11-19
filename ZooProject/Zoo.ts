@@ -1,25 +1,19 @@
-import {IObserver, ISubject} from './interface';
+import {IObserver, ISubject, IZoo} from './interface';
 import {Visitor} from "./Visitor";
-import {CashBox, TypeOfTickets} from './CashBox';
-import {CommercialDepartment} from "./СommercialDepartment";
 import {Person} from "./Person";
-import {Accounting} from "./Аccounting";
-import {Employee} from "./Employee";
-import {Positions, TypeOfAnimal, TypeOfHealth} from "./enums";
-import {Administration} from "./Аdministration";
-import {AdministrationMediator} from "./AdministrationMediator";
-import {Animal} from "./Animal";
 
 
-interface IZoo {
-    visitors: Record<number, Visitor>;
-
-}
-
-class Zoo implements IZoo, IObserver, ISubject<string> {
+export class Zoo implements IZoo, IObserver, ISubject<string> {
+    private static instance: Zoo;
     visitors: Record<number, Visitor> = {};
     private observers: IObserver[] = [];
 
+    public static getInstance(): Zoo {
+        if (Zoo.instance === undefined) {
+            Zoo.instance = new Zoo();
+        }
+        return Zoo.instance;
+    }
 
     update(person: Person): void {
         const visitor = new Visitor(person._firstName, person._lastName, person._dateOfBirth, person._tel, person._email);
@@ -62,58 +56,8 @@ class Zoo implements IZoo, IObserver, ISubject<string> {
         console.log(message);
         this.notify(message);
     }
-
-
 }
 
-const zoo = new Zoo;
-const commercialDepartment = new CommercialDepartment();
-const cashBox = new CashBox();
-const accounting = new Accounting;
-const administration = new Administration();
 
-const employee01 = new Employee('Mark', 'Ryden', '07/10/1900', Positions.SECURITYGUARD, '775-55-55');
-const employee02 = new Employee('Eugene', 'Tooms', '07/10/1900', Positions.ANIMALFEEDER, '775-33-34');
-
-const unicorn = new Animal(TypeOfAnimal.UNICORN, 'marcel', TypeOfHealth.AMAZING, 5);
-
-
-new AdministrationMediator(administration, accounting, commercialDepartment);
-// accounting.paySalary([employee01, employee02]);
-// accounting.paySalary();
-// accounting.paySalary(employee01);
-
-administration.addEmployee(employee01);
-administration.addEmployee(employee02);
-administration.addAnimal(unicorn);
-
-// accounting.addEmployee(employee01);
-// accounting.addEmployee(employee02);
-
-cashBox.attach(zoo);
-cashBox.attach(commercialDepartment);
-
-const person01 = new Person('Kate', 'Popova');
-const person02 = new Person('Johnny', 'Depp', '09/06/1963');
-
-person01.dateOfBirth = '06/11/1998';
-person01.tel = '380665554433';
-person01.email = 'test.popova@gmail.com';
-
-cashBox.ticketSale(person01, TypeOfTickets.child);
-cashBox.ticketSale(person02, TypeOfTickets.adult);
-
-commercialDepartment.newsletter('Курлык-курлык, приходите в наш зоопарк! :)')
-zoo.sendMessageToVisitors('The zoo closes in 15 minutes!');
-
-accounting.addDailyRevenue(cashBox.getDailyRevenue());
-console.log('accounting.employees', accounting.employees);
-console.log('accounting.animals', accounting.animals);
-
-console.log('accounting._budget: ', accounting.budget);
-console.log('zoo.visitors', zoo.visitors);
-console.log('commercialDepartment.clients', commercialDepartment.clients);
-console.log('accounting', accounting);
-console.log('cashBox', cashBox);
 
 

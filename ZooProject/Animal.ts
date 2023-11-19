@@ -2,7 +2,7 @@ import {TypeOfAnimal, TypeOfHealth} from "./enums";
 
 interface IAnimal {
     _id: number;
-     name: string;
+    name: string;
     typeOfAnimal: TypeOfAnimal;
     age: number,
     health: TypeOfHealth;
@@ -21,7 +21,7 @@ export class Animal implements IAnimal {
     length: number | undefined;
     weight: number | undefined;
 
-    constructor( typeOfAnimal: TypeOfAnimal,  name: string,  health: TypeOfHealth,  age: number,) {
+    constructor(typeOfAnimal: TypeOfAnimal, name: string, health: TypeOfHealth, age: number,) {
         this.age = age;
         this.health = health;
         this.name = name;
@@ -35,6 +35,5 @@ export class Animal implements IAnimal {
             'length': animal.length,
             'weight': animal.weight,
         }
-
     }
 }

@@ -1,4 +1,9 @@
 import {Person} from "./Person";
+import {Visitor} from "./Visitor";
+
+export interface IZoo {
+    visitors: Record<number, Visitor>;
+}
 
 export interface ISubject<T extends Person | string> {
     // Attach an observer to the subject.

@@ -1,31 +1,20 @@
 import {ISubject, IObserver} from './interface';
-import {Person} from "./Person";
 import {dailyRevenue} from "./type";
+import {Visitor} from "./Visitor";
+import {ticketPrice, TypeOfTickets} from "./enums";
 
 
-export enum TypeOfTickets {
-    adult = 'ADULT',
-    child = 'CHILD',
-    family = 'FAMILY',
-}
-
-export const ticketPrice = {
-    [TypeOfTickets.adult]: 500,
-    [TypeOfTickets.child]: 300,
-    [TypeOfTickets.family]: 1000,
-}
-
-export class CashBox implements ISubject<Person> {
+export class CashBox implements ISubject<Visitor> {
     private takings: number = 0;
     private observers: IObserver[] = [];
 
-    ticketSale(person: Person, typeOfTicket: TypeOfTickets): void {
+    ticketSale(visitor: Visitor, typeOfTicket: TypeOfTickets): void {
         this.takings += ticketPrice[typeOfTicket];
-        this.notify(person);
+        this.notify(visitor);
     }
 
     getDailyRevenue(): dailyRevenue {
-       return {day: new Date().toDateString(), takings: this.takings};
+        return {day: new Date().toDateString(), takings: this.takings};
     }
 
     public attach(observer: IObserver): void {
@@ -51,7 +40,7 @@ export class CashBox implements ISubject<Person> {
     /**
      * Trigger an update in each subscriber.
      */
-    public notify(person: Person): void {
+    public notify(person: Visitor): void {
         console.log('Subject: Notifying observers...');
         for (const observer of this.observers) {
             observer.update(person);

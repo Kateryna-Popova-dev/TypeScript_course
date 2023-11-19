@@ -3,7 +3,6 @@ import {IObserver, ISubject} from './interface';
 import {Person} from "./Person";
 import {mediatorSetter} from "./AdministrationMediator";
 
-
 export class CommercialDepartment extends mediatorSetter implements ISubject<string> {
     private observers: IObserver[] = [];
 
@@ -11,7 +10,7 @@ export class CommercialDepartment extends mediatorSetter implements ISubject<str
 
     update(person: Person): void {
         const client = new Client(person._firstName, person._lastName, person._dateOfBirth, person._tel, person._email);
-        this.clients[client._id] = client ;
+        this.clients[client._id] = client;
         console.log('ConcreteObserverA: Reacted to the event.');
         this.attach(client);
     }

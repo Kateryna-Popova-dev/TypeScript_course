@@ -11,7 +11,7 @@ export type PositionName =
     'SECURITYGUARD';
 
 export const Positions: { [P in PositionName]: IPosition } = {
-    'DIRECTOR': {name: 'Didector', responsibilities: 'live', salary: 10000},
+    'DIRECTOR': {name: 'Director', responsibilities: 'live', salary: 10000},
     'ACCOUNTANT': {name: 'Accountant', responsibilities: 'control the budget', salary: 5000},
     'ADMINISTRATOR': {name: 'Administrator', responsibilities: 'Zoo management', salary: 5000},
     'PROMOTER': {name: 'Promoter', responsibilities: 'advertise', salary: 4000},
@@ -57,10 +57,14 @@ export enum accountingEvent {
     FEEDPURCHASE = 'feed purchase',
 }
 
-// if (event === 'news') {
-//     console.log('Mediator reacts on news and triggers method newsletter:');
-//     this.commercialDepartment.newsletter(String(data));
-// }
-// newsletter(message: string): void {
-//     this.mediator.notify(this, message, 'news');
-// }
+export enum TypeOfTickets {
+    adult = 'ADULT',
+    child = 'CHILD',
+    family = 'FAMILY',
+}
+
+export const ticketPrice = {
+    [TypeOfTickets.adult]: 500,
+    [TypeOfTickets.child]: 300,
+    [TypeOfTickets.family]: 1000,
+}

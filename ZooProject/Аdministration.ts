@@ -32,7 +32,6 @@ export class Administration extends mediatorSetter implements IAdministration {
 
     removeAnimal(pet: Animal): void {
         this.mediator.notify(this, pet, 'remove');
-
     }
 
     newsletter(message: string): void {

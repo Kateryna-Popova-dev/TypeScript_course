@@ -25,7 +25,13 @@ export class Person {
     }
 
     get age(): number {
-        return 0;
+        const difMs = Date.now() - (new Date(String(this._dateOfBirth))).getTime();
+        const age = new Date(difMs)
+        return Math.abs(age.getUTCFullYear() - 1970);
+    }
+
+    get fullName(): string {
+        return this._firstName + ' ' + this._lastName;
     }
 
     set dateOfBirth(date: string) {

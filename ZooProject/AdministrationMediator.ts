@@ -4,7 +4,6 @@ import {Employee} from "./Employee";
 import {Animal} from "./Animal";
 import {CommercialDepartment} from "./СommercialDepartment";
 
-
 export abstract class mediatorSetter {
     protected mediator: Mediator;
 

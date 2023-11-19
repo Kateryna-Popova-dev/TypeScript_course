@@ -3,7 +3,7 @@ import {IObserver} from "./interface";
 
 export class Client extends Person implements IObserver {
 
-    constructor(_firstName: string, _lastName: string, dateOfBirth?: string,  tel?: string, email?: string) {
+    constructor(_firstName: string, _lastName: string, dateOfBirth?: string, tel?: string, email?: string) {
         super(_firstName, _lastName, dateOfBirth, tel, email);
     }
 
