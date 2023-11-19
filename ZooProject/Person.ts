@@ -1,4 +1,4 @@
-import {regExp} from './helper';
+import {regExpDateBirth} from './helper';
 
 export class Person {
     _id: number;
@@ -14,7 +14,7 @@ export class Person {
         this._dateOfBirth = dateOfBirth;
         this._id = Math.floor(100000 + Math.random() * 900000);
         if (dateOfBirth) {
-            if (regExp.test(dateOfBirth)) {
+            if (regExpDateBirth.test(dateOfBirth)) {
                 this._dateOfBirth = dateOfBirth;
             } else {
                 throw new Error('udtyudtyutf');
@@ -29,7 +29,7 @@ export class Person {
     }
 
     set dateOfBirth(date: string) {
-        while (!regExp.test(date)) {
+        while (!regExpDateBirth.test(date)) {
             alert("Date format should be 12/12/2012")
         }
         this._dateOfBirth = date;

@@ -1,12 +1,13 @@
 import {Person} from "./Person";
-import {regExpDateBirth} from './helper';
-import {IObserver} from "./interface";
+import {regExpDateBirth} from "./helper";
+import {IPosition} from "./interface";
 
-export class Visitor extends Person implements IObserver {
+export class Employee extends Person {
+    _position: IPosition;
 
-
-    constructor(_firstName: string, _lastName: string, dateOfBirth?: string, tel?: string, email?: string) {
+    constructor(_firstName: string, _lastName: string, dateOfBirth: string, position: IPosition, tel: string, email?: string) {
         super(_firstName, _lastName, dateOfBirth, tel, email);
+        this._position = position;
     }
 
     get age(): number {
@@ -28,7 +29,11 @@ export class Visitor extends Person implements IObserver {
         this._tel = tel;
     }
 
-    update(data: string): void {
-        console.log(`I am visitor ${this._firstName} ${this._lastName}, got the message: ${data}`);
+    get position(): string {
+        return this._position.name;
+    }
+
+    get responsibilities(): string {
+        return this._position.responsibilities;
     }
 }

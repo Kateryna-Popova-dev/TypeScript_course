@@ -1,5 +1,7 @@
-import {Subject, Observer} from './interface';
+import {ISubject, IObserver} from './interface';
 import {Person} from "./Person";
+import {dailyRevenue} from "./type";
+
 
 export enum TypeOfTickets {
     adult = 'ADULT',
@@ -13,16 +15,20 @@ export const ticketPrice = {
     [TypeOfTickets.family]: 1000,
 }
 
-export class CashBox implements Subject<Person> {
+export class CashBox implements ISubject<Person> {
     private takings: number = 0;
-    private observers: Observer[] = [];
+    private observers: IObserver[] = [];
 
     ticketSale(person: Person, typeOfTicket: TypeOfTickets): void {
         this.takings += ticketPrice[typeOfTicket];
         this.notify(person);
     }
 
-    public attach(observer: Observer): void {
+    getDailyRevenue(): dailyRevenue {
+       return {day: new Date().toDateString(), takings: this.takings};
+    }
+
+    public attach(observer: IObserver): void {
         const isExist = this.observers.includes(observer);
         if (isExist) {
             return console.log('Subject: Observer has been attached already.');
@@ -32,7 +38,7 @@ export class CashBox implements Subject<Person> {
         this.observers.push(observer);
     }
 
-    public detach(observer: Observer): void {
+    public detach(observer: IObserver): void {
         const observerIndex = this.observers.indexOf(observer);
         if (observerIndex === -1) {
             return console.log('Subject: Nonexistent observer.');

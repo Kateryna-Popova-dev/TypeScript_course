@@ -1,10 +1,11 @@
 import {Client} from "./Clients";
-import {Observer, Subject} from './interface';
+import {IObserver, ISubject} from './interface';
 import {Person} from "./Person";
+import {mediatorSetter} from "./AdministrationMediator";
 
 
-export class CommercialDepartment implements Subject<string> {
-    private observers: Observer[] = [];
+export class CommercialDepartment extends mediatorSetter implements ISubject<string> {
+    private observers: IObserver[] = [];
 
     clients: Record<number, Client> = {};
 
@@ -15,7 +16,7 @@ export class CommercialDepartment implements Subject<string> {
         this.attach(client);
     }
 
-    public attach(observer: Observer): void {
+    public attach(observer: IObserver): void {
         const isExist = this.observers.includes(observer);
         if (isExist) {
             return console.log('Subject: Observer has been attached already.');
@@ -25,7 +26,7 @@ export class CommercialDepartment implements Subject<string> {
         this.observers.push(observer);
     }
 
-    public detach(observer: Observer): void {
+    public detach(observer: IObserver): void {
         const observerIndex = this.observers.indexOf(observer);
         if (observerIndex === -1) {
             return console.log('Subject: Nonexistent observer.');
