@@ -3,7 +3,7 @@ import {Employee} from "../Employee";
 import {Positions, TypeOfAnimal, TypeOfHealth} from "../enums";
 import {Animal} from "../Animal";
 
-describe('Person case', () => {
+describe('Accounting case', () => {
 
     let accounting: Accounting;
     const employee01 = new Employee('Kate', 'Popova', '06/11/1998', Positions.ADMINISTRATOR, '38066000000');

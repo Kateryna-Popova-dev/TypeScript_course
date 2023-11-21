@@ -6,7 +6,7 @@ import {ticketPrice, TypeOfTickets} from "./enums";
 
 export class CashBox implements ISubject<Visitor> {
     private takings: number = 0;
-    private observers: IObserver[] = [];
+    private _observers: IObserver[] = [];
 
     ticketSale(visitor: Visitor, typeOfTicket: TypeOfTickets): void {
         this.takings += ticketPrice[typeOfTicket];
@@ -40,10 +40,16 @@ export class CashBox implements ISubject<Visitor> {
     /**
      * Trigger an update in each subscriber.
      */
-    public notify(person: Visitor): void {
+    public notify(person: Visitor): boolean {
         console.log('Subject: Notifying observers...');
+        let notifyResult = true;
         for (const observer of this.observers) {
-            observer.update(person);
+            notifyResult = observer.update(person) ? notifyResult : false;
         }
+        return notifyResult;
+    }
+
+    get observers(): IObserver[] {
+        return this._observers;
     }
 }

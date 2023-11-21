@@ -37,11 +37,11 @@ export class AdministrationMediator implements Mediator {
 
     public notify(data: Employee | Animal | string, event: string): void {
         if (event === 'add') {
-            if (isAnimal(data)) {
+            if (this.isAnimal(data)) {
                 console.log('Mediator reacts on add and triggers method addAnimal.');
                 this.accounting.addAnimal(data);
             }
-            if (isEmployee(data)) {
+            if (this.isEmployee(data)) {
                 console.log('Mediator reacts on add and triggers method addEmployee.');
                 this.accounting.addEmployee(data);
             }
@@ -49,11 +49,11 @@ export class AdministrationMediator implements Mediator {
 
         if (event === 'remove') {
 
-            if (isAnimal(data)) {
+            if (this.isAnimal(data)) {
                 console.log('Mediator reacts on remove and triggers method removeAnimal:');
                 this.accounting.RemoveAnimal(data);
             }
-            if (isEmployee(data)) {
+            if (this.isEmployee(data)) {
                 console.log('Mediator reacts on remove and triggers method removeEmployee:');
                 this.accounting.RemoveEmployee(data);
             }
@@ -63,13 +63,13 @@ export class AdministrationMediator implements Mediator {
             this.commercialDepartment.newsletter(String(data));
         }
     }
-}
 
-function isAnimal(pet: unknown): pet is Animal {
-    return pet instanceof Animal;
-}
+    isAnimal(pet: unknown): pet is Animal {
+        return pet instanceof Animal;
+    }
 
-function isEmployee(person: unknown): person is Employee {
-    return person instanceof Employee;
+    isEmployee(person: unknown): person is Employee {
+        return person instanceof Employee;
+    }
 }
 

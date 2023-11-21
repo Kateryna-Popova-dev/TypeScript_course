@@ -17,9 +17,9 @@ export class Animal implements IAnimal {
     health: TypeOfHealth;
     name: string;
     typeOfAnimal: TypeOfAnimal;
-    height: number | undefined;
-    length: number | undefined;
-    weight: number | undefined;
+    private _height: number | undefined;
+    private _length: number | undefined;
+    private _weight: number | undefined;
 
     constructor(typeOfAnimal: TypeOfAnimal, name: string, health: TypeOfHealth, age: number,) {
         this.age = age;
@@ -29,11 +29,24 @@ export class Animal implements IAnimal {
         this._id = Math.floor(100000 + Math.random() * 900000);
     }
 
-    getParametersAnimal(animal: Animal): object {
+    getParametersAnimal(): object {
         return {
-            'height': animal.height,
-            'length': animal.length,
-            'weight': animal.weight,
+            'height': this._height,
+            'length': this._length,
+            'weight': this._weight,
         }
     }
+
+    set height(value: number) {
+        this._height = value;
+    }
+
+    set length(value: number) {
+        this._length = value;
+    }
+
+    set weight(value: number) {
+        this._weight = value;
+    }
+
 }

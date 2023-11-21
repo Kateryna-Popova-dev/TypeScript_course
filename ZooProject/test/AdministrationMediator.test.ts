@@ -7,7 +7,7 @@ import {CommercialDepartment} from "../СommercialDepartment";
 import {Administration} from "../Аdministration";
 
 
-describe('Person case', () => {
+describe('Administration mediator case', () => {
 
     let administrationMediator: AdministrationMediator;
     let accounting: Accounting = Accounting.getInstance();
@@ -16,10 +16,10 @@ describe('Person case', () => {
     const animal01 = new Animal(TypeOfAnimal.LION, 'Simba', TypeOfHealth.AMAZING, 2);
     const employee01 = new Employee('John', 'Doe', '12/12/1912', Positions.DIRECTOR, '380666666666');
 
-        beforeEach(() => {
-            administrationMediator = new AdministrationMediator(administration, accounting, commercialDepartment);
+    beforeEach(() => {
+        administrationMediator = new AdministrationMediator(administration, accounting, commercialDepartment);
 
-        });
+    });
 
     it('Accounting created', () => {
         expect(administrationMediator).toBeInstanceOf(AdministrationMediator);
@@ -44,10 +44,14 @@ describe('Person case', () => {
         administrationMediator.notify(employee01, 'remove');
         expect(accounting.employees).toEqual([]);
     });
-    it('', () => {
+    it('commercialDepartment create newsletter adn returned true', () => {
         expect(commercialDepartment.newsletter('advertising campaign')).toBe(true);
-
     });
-
+    it('function isAnimal returned Animal', () => {
+        expect(administrationMediator.isAnimal(animal01)).toBe(true);
+    });
+    it('function isEmployee returned Employee', () => {
+        expect(administrationMediator.isEmployee(employee01)).toBe(true);
+    });
 
 });
