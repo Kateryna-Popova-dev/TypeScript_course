@@ -11,7 +11,7 @@ interface IAdministration {
 
     removeAnimal(pet: Animal): void;
 
-    newsletter(message: string): void;
+    newsletter(message: string): boolean;
 }
 
 
@@ -34,7 +34,8 @@ export class Administration extends mediatorSetter implements IAdministration {
         this.mediator.notify(pet, 'remove');
     }
 
-    newsletter(message: string): void {
-        this.mediator.notify( message, 'news');
+    newsletter(message: string): boolean {
+       this.mediator.notify( message, 'news');
+       return true;
     }
 }

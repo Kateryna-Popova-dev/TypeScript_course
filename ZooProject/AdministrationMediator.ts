@@ -35,7 +35,7 @@ export class AdministrationMediator implements Mediator {
         this.administration.setMediator(this);
     }
 
-    public notify(data: Employee | Animal | string, event: string): void {
+    public notify(data: Employee | Animal | string, event: string): void | boolean {
         if (event === 'add') {
             if (this.isAnimal(data)) {
                 console.log('Mediator reacts on add and triggers method addAnimal.');
@@ -60,7 +60,7 @@ export class AdministrationMediator implements Mediator {
         }
         if (event === 'news') {
             console.log('Mediator reacts on news and triggers method newsletter:');
-            this.commercialDepartment.newsletter(String(data));
+           return this.commercialDepartment.newsletter(String(data));
         }
     }
 

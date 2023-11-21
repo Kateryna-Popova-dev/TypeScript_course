@@ -8,7 +8,6 @@ describe('Zoo case', () => {
 
     beforeEach(() => {
         zoo = Zoo.getInstance();
-
     });
 
     it('Zoo created', () => {
