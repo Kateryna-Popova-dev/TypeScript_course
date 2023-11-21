@@ -18,23 +18,23 @@ interface IAdministration {
 export class Administration extends mediatorSetter implements IAdministration {
 
     addEmployee(employee: Employee) {
-        this.mediator.notify(this, employee, 'add');
+        this.mediator.notify(employee, 'add');
     }
 
     removeEmployee(employee: Employee) {
-        this.mediator.notify(this, employee, 'remove');
+        this.mediator.notify( employee, 'remove');
     }
 
     addAnimal(pet: Animal): void {
-        this.mediator.notify(this, pet, 'add');
+        this.mediator.notify( pet, 'add');
 
     }
 
     removeAnimal(pet: Animal): void {
-        this.mediator.notify(this, pet, 'remove');
+        this.mediator.notify(pet, 'remove');
     }
 
     newsletter(message: string): void {
-        this.mediator.notify(this, message, 'news');
+        this.mediator.notify( message, 'news');
     }
 }

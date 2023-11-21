@@ -10,10 +10,10 @@ import {Zoo} from "./Zoo";
 import {Visitor} from "./Visitor";
 
 //Create all departments
-const zoo = new Zoo;
+const zoo = Zoo.getInstance();
+const accounting = Accounting.getInstance();
 const commercialDepartment = new CommercialDepartment();
 const cashBox = new CashBox();
-const accounting = new Accounting;
 const administration = new Administration();
 
 //Set mediator with administration, accounting, commercialDepartment.
@@ -26,6 +26,7 @@ cashBox.attach(commercialDepartment);
 //Create new employee
 const employee01 = new Employee('Mark', 'Ryden', '07/10/1900', Positions.SECURITYGUARD, '775-55-55');
 const employee02 = new Employee('Eugene', 'Tooms', '07/10/1900', Positions.ANIMALFEEDER, '775-33-34');
+administration.removeEmployee(employee01);
 
 //Create new animal
 const unicorn = new Animal(TypeOfAnimal.UNICORN, 'marcel', TypeOfHealth.AMAZING, 5);
@@ -38,6 +39,7 @@ accounting.paySalary(employee01);
 //Opportunity new employee and animals.
 administration.addEmployee(employee01);
 administration.addEmployee(employee02);
+administration.removeEmployee(employee01);
 administration.addAnimal(unicorn);
 
 //Create visitors

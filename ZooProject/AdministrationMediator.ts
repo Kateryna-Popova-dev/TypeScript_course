@@ -17,7 +17,7 @@ export abstract class mediatorSetter {
 }
 
 interface Mediator {
-    notify(sender: object, employee: Employee | Animal | string, event: string): void;
+    notify(employee: Employee | Animal | string, event: string): void;
 }
 
 
@@ -35,7 +35,7 @@ export class AdministrationMediator implements Mediator {
         this.administration.setMediator(this);
     }
 
-    public notify(sender: object, data: Employee | Animal | string, event: string): void {
+    public notify(data: Employee | Animal | string, event: string): void {
         if (event === 'add') {
             if (isAnimal(data)) {
                 console.log('Mediator reacts on add and triggers method addAnimal.');

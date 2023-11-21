@@ -8,6 +8,9 @@ export class Zoo implements IZoo, IObserver, ISubject<string> {
     visitors: Record<number, Visitor> = {};
     private observers: IObserver[] = [];
 
+    private constructor() {
+    }
+
     public static getInstance(): Zoo {
         if (Zoo.instance === undefined) {
             Zoo.instance = new Zoo();
@@ -15,11 +18,12 @@ export class Zoo implements IZoo, IObserver, ISubject<string> {
         return Zoo.instance;
     }
 
-    update(person: Person): void {
+    update(person: Person): boolean {
         const visitor = new Visitor(person._firstName, person._lastName, person._dateOfBirth, person._tel, person._email);
-        this.visitors[visitor._id] = visitor;
+        this.visitors[visitor.getId()] = visitor;
         console.log('ConcreteObserverA: Reacted to the event.');
         this.attach(visitor);
+        return true;
     }
 
     public attach(visitor: Visitor): void {

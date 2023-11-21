@@ -18,7 +18,7 @@ export interface ISubject<T extends Person | string> {
 
 export interface IObserver {
     // Receive update from subject.
-    update(data: Person | string): void;
+    update(data: Person | string): boolean;
 }
 
 export interface IPosition {

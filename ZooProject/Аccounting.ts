@@ -20,6 +20,10 @@ export class Accounting extends mediatorSetter {
         return Accounting.instance;
     }
 
+    private constructor() {
+        super();
+    }
+
     addDailyRevenue(data: dailyRevenue): void {
         this._revenueHistory.push(data);
         this._budget += data.takings;
@@ -37,22 +41,22 @@ export class Accounting extends mediatorSetter {
         return this._animals;
     }
 
-    addEmployee(employee: Employee) {
+    addEmployee(employee: Employee): void {
         this._employees.push(employee);
     }
 
-    RemoveEmployee(employee: Employee) {
-        const index = this._employees.findIndex(item => item._id === employee._id);
+    RemoveEmployee(employee: Employee): void {
+        const index = this._employees.findIndex(item => item.getId() === employee.getId());
         this._employees.splice(index, 1);
     }
 
-    addAnimal(pet: Animal) {
+    addAnimal(pet: Animal): void {
         this._animals.push(pet);
     }
 
-    RemoveAnimal(pet: Animal) {
+    RemoveAnimal(pet: Animal): void {
         const index = this._animals.findIndex(item => item._id === pet._id);
-        this._employees.splice(index, 1);
+        this._animals.splice(index, 1);
     }
 
     paySalary(employee?: Employee | Employee[]): void {

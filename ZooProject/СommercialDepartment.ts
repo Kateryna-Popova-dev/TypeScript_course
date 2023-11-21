@@ -8,11 +8,12 @@ export class CommercialDepartment extends mediatorSetter implements ISubject<str
 
     clients: Record<number, Client> = {};
 
-    update(person: Person): void {
-        const client = new Client(person._firstName, person._lastName, person._dateOfBirth, person._tel, person._email);
-        this.clients[client._id] = client;
+    update(person: Person): boolean {
+        const client = new Client(person._firstName, person._lastName, person._dateOfBirth, person._tel, person._email, person.getId());
+        this.clients[client.getId()] = client;
         console.log('ConcreteObserverA: Reacted to the event.');
         this.attach(client);
+        return true;
     }
 
     public attach(observer: IObserver): void {
@@ -38,15 +39,17 @@ export class CommercialDepartment extends mediatorSetter implements ISubject<str
     /**
      * Trigger an update in each subscriber.
      */
-    public notify(message: string): void {
+    public notify(message: string): boolean {
+        let notifyResult = true;
         console.log('Subject: Notifying observers...');
         for (const observer of this.observers) {
-            observer.update(message);
+            notifyResult = observer.update(message) ? notifyResult : false;
         }
+        return notifyResult;
     }
 
-    newsletter(message: string): void {
+    newsletter(message: string): boolean {
         console.log(message);
-        this.notify(message);
+        return this.notify(message);
     }
 }

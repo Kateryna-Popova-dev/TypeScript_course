@@ -1,7 +1,7 @@
 import {regExpDateBirth} from './helper';
 
 export class Person {
-    _id: number;
+   private _id: number;
     _firstName: string;
     _lastName: string;
     _dateOfBirth?: string;
@@ -23,6 +23,14 @@ export class Person {
         this._tel = tel;
         this._email = email;
     }
+
+    protected set id(id: number) {
+        this._id = id;
+    }
+
+   getId():number{
+        return this._id;
+   }
 
     get age(): number {
         const difMs = Date.now() - (new Date(String(this._dateOfBirth))).getTime();

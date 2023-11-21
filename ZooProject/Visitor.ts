@@ -7,7 +7,8 @@ export class Visitor extends Person implements IObserver {
         super(_firstName, _lastName, dateOfBirth, tel, email);
     }
 
-    update(data: string): void {
+    update(data: string): boolean {
         console.log(`I am visitor ${this._firstName} ${this._lastName}, got the message: ${data}`);
+        return true;
     }
 }
